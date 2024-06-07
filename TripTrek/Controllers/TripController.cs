@@ -71,25 +71,40 @@ namespace TripTrek.Controllers
         [HttpPost]
         public async Task<ActionResult<List<Trip>>> AddTrip([FromBody] TripData tripData)
         {
+            
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+            var hotel = new Hotel
+            {
+                Id = tripData.HotelId ?? 0,
+                Name=tripData.HotelName
+                
+            };
+            var location = new Location
+            {
+             Id=tripData.LocationId,
+             Country = tripData.Country,
+             City = tripData.City,
+            };
 
             var trip = new Trip
             {
                 Id = tripData.Id,
-                LocationId = tripData.LocationId,
+                LocationId = location.Id,
                 DepartureDate = tripData.DepartureDate,
                 DateOfReturn = tripData.DateOfReturn,
                 Budget = tripData.Budget,
                 PersonsNr = tripData.PersonsNr,
                 TouristSpotsId = tripData.TouristSpotsId,
                 UserId = tripData.UserId,
-                HotelId = tripData.HotelId,
+                HotelId = hotel.Id,
                 TransportId = tripData.TransportId
             };
-
+            _context.Hotels.Add(hotel);
+            _context.Locations.Add(location);
             _context.Trips.Add(trip);
             await _context.SaveChangesAsync();
 

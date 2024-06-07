@@ -31,5 +31,14 @@ namespace TripTrek.Data
         public int? HotelId { get; set; }
 
         public int? TransportId { get; set; }
+        // New properties for hotel and location
+        [Required]
+        public string HotelName { get; set; }
+
+        [Required]
+        public string Country { get; set; }
+
+        [Required]
+        public string City { get; set; }
     }
 }

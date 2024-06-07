@@ -15,8 +15,10 @@ public partial class User
     public DateTime? BirthDate { get; set; }
 
     public int AccountId { get; set; }
+    public string email { get; set; }
     [JsonIgnore]
     public virtual Account Account { get; set; } = null!;
 
     public virtual ICollection<Trip> Trips { get; set; } = new List<Trip>();
 }
+
